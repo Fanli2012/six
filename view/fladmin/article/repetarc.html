@@ -1,0 +1,37 @@
+{extend name="public/base" /}
+{block name="title"}重复文档列表{/block}
+
+{block name="content"}
+<div class="admin-content-box-nav">
+  <span class="layui-breadcrumb" lay-filter="breadcrumb" style="visibility:visible;">
+    <a href="">重复文档列表</a><span lay-separator="">/</span>
+    <a href="{:url('index')}"><cite>文章列表</cite></a>
+  </span>
+</div>
+
+<div class="layui-fluid">
+  <div style="padding-top:15px;padding-bottom:5px;">
+    <a href="{:url('add')}<?php if(!empty($_GET["id"])){echo '?type_id='.$_GET["id"];}?>" class="layui-btn layui-btn-danger"><i class="layui-icon layui-icon-add-circle"></i>发布文章</a>
+  </div>
+
+  <div class="layui-form">
+    <table class="layui-table">
+      <thead>
+        <tr>
+          <th>文档标题</th>
+          <th>重复数量</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php if ($list) { foreach ($list as $row) { ?>
+        <tr>
+			<td><a href="{:url('index')}?keyword=<?php echo $row["title"]; ?>"><?php echo $row["title"]; ?></a></td>
+			<td><?php echo $row["count"]; ?></td>
+		</tr>
+        <?php } } ?>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{/block}

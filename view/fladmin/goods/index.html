@@ -1,0 +1,118 @@
+{extend name="public/base" /}
+{block name="title"}商品列表{/block}
+
+{block name="content"}
+<div class="admin-content-box-nav">
+  <span class="layui-breadcrumb" lay-filter="breadcrumb" style="visibility:visible;">
+    <a href="{:url('fladmin/Goodstype/index')}">商品分类</a><span lay-separator="">/</span>
+    <a href="{:url('index')}"><cite>商品列表</cite></a>
+  </span>
+</div>
+<div class="layui-row" style="padding:15px;border-bottom:1px solid #f6f6f6;">
+  <form action="{:url('index')}" method="get" class="layui-form layui-col-md12">
+    搜索：
+      <div class="layui-input-inline">
+        <select name="type_id">
+          <option value="0">请选择栏目</option>
+          <?php if ($goods_type_list) { foreach ($goods_type_list as $row) { ?><option value="<?php echo $row["id"]; ?>"><?php for($i=0;$i<$row["deep"];$i++){echo "—";}echo $row["name"]; ?></option><?php }} ?>
+        </select>
+      </div>
+    <div class="layui-inline">
+      <input type="text" id="keyword" name="keyword" placeholder="请输入关键字" autocomplete="off" class="layui-input">
+    </div>
+    <button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon layui-icon-search"></i></button>
+  </form>
+</div>
+<div class="layui-fluid">
+  <div style="padding-top:15px;padding-bottom:5px;">
+    <a href="{:url('add')}<?php if(!empty($_GET["id"])){echo '?catid='.$_GET["id"];}?>" class="layui-btn layui-btn-danger"><i class="layui-icon layui-icon-add-circle"></i>发布商品</a>
+  </div>
+
+  <div class="layui-row">
+    <table class="layui-table">
+      <thead>
+        <tr>
+			<th>ID</th>
+			<th>选择</th>
+			<th>商品标题</th>
+			<th>更新时间</th>
+			<th>类目</th>
+			<th>点击</th>
+			<th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php if ($list) { foreach ($list as $row) { ?>
+        <tr>
+		  <td><?php echo $row["id"]; ?></td>
+		  <td><input name="arcID" type="checkbox" value="<?php echo $row["id"]; ?>"></td>
+		  <td><a href="{:url('edit')}?id=<?php echo $row["id"]; ?>"><?php echo $row["title"]; ?></a> <?php if(!empty($row["litpic"])){echo "<small style='color:red'>[图]</small>";} ?> </td>
+		  <td><?php echo date('Y-m-d H:i:s',$row["update_time"]); ?></td>
+		  <td><a href="{:url('index')}?type_id=<?php echo $row["type_id"]; ?>"><?php echo $row["type_name_text"]; ?></a></td><td><?php echo $row["click"]; ?></td><td><a target="_blank" href="/goods/<?php echo $row["id"]; ?>">预览</a>&nbsp;<a href="{:url('edit')}?id=<?php echo $row["id"]; ?>">修改</a>&nbsp;<a onclick="delconfirm('{:url('del')}?id=<?php echo $row["id"]; ?>')" href="javascript:;">删除</a></td>
+		</tr>
+		<?php } } ?>
+        <tr>
+            <td colspan="8" class="layui-text">
+            <a href="javascript:selAll('arcID')">反选</a>&nbsp;
+            <a href="javascript:delArc()">删除</a>&nbsp;
+            <a href="javascript:tjArc()">特荐</a>
+            </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="backpages">{$page|raw}</div>
+  </div>
+</div>
+
+<script>
+//批量删除商品
+function delArc(aid)
+{
+	var checkvalue=getItems();
+	
+	if(checkvalue=='')
+	{
+		alert('必须选择一个或多个文档！');
+		return;
+	}
+	
+	if(confirm("确定删除吗"))
+	{
+		location="{:url('del')}?id="+checkvalue;
+	}
+	else
+	{
+		
+	}
+}
+
+//推荐商品
+function tjArc(aid)
+{
+	var checkvalue=getItems();
+	
+	if(checkvalue=='')
+	{
+		alert('必须选择一个或多个文档！');
+		return;
+	}
+	
+	if(confirm("确定要推荐吗"))
+	{
+		location="{:url('recommendarc')}?id="+checkvalue;
+	}
+	else
+	{
+		
+	}
+}
+
+layui.use(['jquery', 'form'], function () {
+  var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
+  //……
+  //但是，如果你的HTML是动态生成的，自动渲染就会失效
+  //因此你需要在相应的地方，执行下述方法来手动渲染，跟这类似的还有 element.init();
+  form.render();
+});
+</script>
+{/block}

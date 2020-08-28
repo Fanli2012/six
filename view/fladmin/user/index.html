@@ -1,0 +1,72 @@
+{extend name="public/base" /}
+{block name="title"}会员列表{/block}
+<a href="<?php echo url('user_money/index'); ?>">余额记录</a> ] [ <a href="<?php echo url('user_rank/index'); ?>">会员等级</a>
+{block name="content"}
+<div class="admin-content-box-nav">
+  <span class="layui-breadcrumb" lay-filter="breadcrumb" style="visibility:visible;">
+    <a href="{:url('index')}"><cite>会员列表</cite></a>
+  </span>
+</div>
+<div class="layui-row" style="padding:15px;border-bottom:1px solid #f6f6f6;">
+  <form action="{:url('index')}" method="get" class="layui-form layui-col-md12">
+    搜索：
+    <div class="layui-inline">
+      <input type="text" id="keyword" name="keyword" placeholder="请输入关键字" autocomplete="off" class="layui-input">
+    </div>
+    <button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon layui-icon-search"></i></button>
+  </form>
+</div>
+<div class="layui-fluid">
+  <div style="padding-top:15px;padding-bottom:5px;">
+    <a href="{:url('add')}" class="layui-btn layui-btn-danger"><i class="layui-icon layui-icon-add-circle"></i>添加会员</a>
+    <a href="{:url('user_money/index')}" class="layui-btn layui-btn-warm">余额记录</a>
+    <a href="{:url('user_rank/index')}" class="layui-btn layui-btn-normal">会员等级</a>
+  </div>
+
+  <div class="layui-form">
+    <table class="layui-table">
+      <thead>
+        <tr>
+            <th>ID</th>
+			<th>头像</th>
+			<th>用户名</th>
+			<th>性别</th>
+			<th>余额</th>
+			<th>积分</th>
+			<th>佣金</th>
+			<th>注册时间</th>
+			<th>状态</th>
+			<th>管理</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php if ($list) { foreach ($list as $row) { ?>
+        <tr>
+            <td><?php echo $row['id']; ?></td>
+			<td><img src="<?php echo $row['head_img']; ?>" style="width:24px;height:24px;" onerror="this.src='<?php echo http_host(); ?>/images/no_pic.jpg'"></td>
+			<td><?php if($row['user_name']){echo $row['user_name'];}else{echo $row['mobile'];} ?></td>
+			<td><?php echo $row['sex_text']; ?></td>
+			<td><?php echo $row['money']; ?></td>
+			<td><?php echo $row['point']; ?></td>
+			<td><font color="red"><?php echo $row['commission']; ?></font></td>
+			<td><?php echo date('Y-m-d H:i:s',$row['add_time']); ?></td>
+			<td><a href="{:url('index')}?status=<?php echo $row['status']; ?>"><?php echo $row['status_text']; ?></a></td>
+			<td><a href="<?php echo url('user_money/add').'?user_id='.$row['id']; ?>">人工充值</a> | <a href="<?php echo url('user_money/index').'?user_id='.$row['id']; ?>">余额记录</a> | <a href="<?php echo url('user/edit'); ?>?id=<?php echo $row['id']; ?>">修改</a></td>
+		</tr>
+        <?php } } ?>
+      </tbody>
+    </table>
+    <div class="backpages">{$page|raw}</div>
+  </div>
+</div>
+
+<script>
+layui.use(['jquery', 'form'], function () {
+  var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
+  //……
+  //但是，如果你的HTML是动态生成的，自动渲染就会失效
+  //因此你需要在相应的地方，执行下述方法来手动渲染，跟这类似的还有 element.init();
+  form.render();
+});
+</script>
+{/block}

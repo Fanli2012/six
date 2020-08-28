@@ -1,0 +1,32 @@
+{extend name="public/base" /}
+{block name="title"}推送链接给百度{/block}
+
+{block name="content"}
+<div class="admin-content-box-nav">
+  <span class="layui-breadcrumb" lay-filter="breadcrumb" style="visibility:visible;">
+    <a href=""><cite>推送链接给百度</cite></a>
+  </span>
+</div>
+
+<div class="layui-fluid" style="padding:15px;">
+  <form method="post" action="{:url('push_url_to_baidu')}" role="form" enctype="multipart/form-data" class="layui-form">
+    <div class="layui-form-item layui-form-text">
+      <label class="layui-form-label">链接</label>
+      <div class="layui-input-block">
+        <textarea placeholder="一行一个链接" istextarea="true" name="urls" rows="3" id="urls" placeholder="一行一个链接" class="layui-textarea"></textarea>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <div class="layui-input-block">
+        <button class="layui-btn" lay-submit="" lay-filter="">提交</button>
+        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+      </div>
+    </div>
+  </form>
+</div>
+<script>
+  layui.use(['jquery', 'form'], function () {
+    var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
+  });
+</script>
+{/block}

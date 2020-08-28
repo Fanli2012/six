@@ -1,0 +1,69 @@
+{extend name="public/base" /}
+{block name="title"}企业列表{/block}
+
+{block name="content"}
+<div class="admin-content-box-nav">
+  <span class="layui-breadcrumb" lay-filter="breadcrumb" style="visibility:visible;">
+    <a href="{:url('index')}"><cite>企业列表</cite></a>
+  </span>
+</div>
+<div class="layui-row" style="padding:15px;border-bottom:1px solid #f6f6f6;">
+  <form action="{:url('index')}" method="get" class="layui-form layui-col-md12">
+    搜索：
+    <div class="layui-inline">
+      <input type="text" id="keyword" name="keyword" placeholder="请输入关键字" autocomplete="off" class="layui-input">
+    </div>
+    <button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon layui-icon-search"></i></button>
+  </form>
+</div>
+<div class="layui-fluid">
+  <div style="padding-top:15px;padding-bottom:5px;">
+    <a href="{:url('add')}" class="layui-btn layui-btn-danger"><i class="layui-icon layui-icon-add-circle"></i>添加企业</a>
+  </div>
+
+  <div class="layui-form">
+    <table class="layui-table">
+      <thead>
+        <tr>
+			<th>ID</th>
+			<th>用户名</th>
+			<th>名称</th>
+			<th>状态</th>
+			<th>文章数</th>
+			<th>分类</th>
+			<th>是否推荐</th>
+			<th>注册时间</th>
+			<th>点击</th>
+			<th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php if ($list) { foreach ($list as $row) { ?>
+        <tr>
+			<td><?php echo $row["id"]; ?></td>
+			<td><?php echo $row["user_name"]; ?></td>
+			<td><?php if($row['head_img']){echo '<img src="'.$row['head_img'].'" style="width:20px;height:20px;margin-right:5px;">';} ?>{$row["company_name"]|default="-"}</td>
+			<td>{$row["status_text"]|default="-"}</td>
+			<td>{$row["article_count"]|default="-"}</td>
+			<td><a href="{:url('fladmin/Shop/index')}?category_id=<?php echo $row["category_id"]; ?>">{$row["category_text"]|default="-"}</a></td>
+			<td><a style="<?php if($row["tuijian"]==1){echo 'color:#09BB07;';} ?>" href="{:url('fladmin/Shop/index')}?tuijian=<?php echo $row["tuijian"]; ?>">{$row["tuijian_text"]|default="-"}</a></td>
+			<td><?php if($row["add_time"]==0){echo '-';}else{echo date('Y-m-d',$row["add_time"]);} ?></td>
+			<td><?php echo $row["click"]; ?></td><td><a target="_blank" href="/store/<?php echo $row["id"]; ?>">预览</a>&nbsp;<a href="{:url('fladmin/Shop/edit')}?id=<?php echo $row["id"]; ?>">修改</a>&nbsp;<a onclick="delconfirm('{:url('fladmin/Shop/del')}?id=<?php echo $row["id"]; ?>')" href="javascript:;">删除</a>&nbsp;<?php if($row["tuijian"]==0){ ?><a href="{:url('fladmin/Shop/tuijian')}?tuijian=1&id=<?php echo $row["id"]; ?>">推荐</a>&nbsp;<?php }else{ ?><a href="{:url('fladmin/Shop/tuijian')}?tuijian=0&id=<?php echo $row["id"]; ?>">取消推荐</a>&nbsp;<?php } ?><?php if($row["status"]==3){ ?><a onclick="delconfirm('{:url('fladmin/Shop/tongguo')}?id=<?php echo $row["id"]; ?>')" href="javascript:;">通过</a>&nbsp;<?php } ?></td>
+		</tr>
+		<?php } } ?>
+      </tbody>
+    </table>
+    <div class="backpages">{$page|raw}</div>
+  </div>
+</div>
+
+<script>
+layui.use(['jquery', 'form'], function () {
+  var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
+  //……
+  //但是，如果你的HTML是动态生成的，自动渲染就会失效
+  //因此你需要在相应的地方，执行下述方法来手动渲染，跟这类似的还有 element.init();
+  form.render();
+});
+</script>
+{/block}
