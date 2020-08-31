@@ -3,12 +3,12 @@
 namespace app\common\logic;
 
 use think\facade\Validate;
-use app\common\validate\AdminLog as AdminLogValidate;
+use app\common\validate\Log as LogValidate;
 use think\exception\ValidateException;
 use app\common\lib\ReturnData;
-use app\common\model\AdminLog;
+use app\common\model\Log;
 
-class AdminLogLogic extends BaseLogic
+class LogLogic extends BaseLogic
 {
     protected function initialize()
     {
@@ -17,12 +17,12 @@ class AdminLogLogic extends BaseLogic
 
     public function getModel()
     {
-        return new AdminLog();
+        return new Log();
     }
 
     public function getValidate()
     {
-        return validate(AdminLogValidate::class);
+        return validate(LogValidate::class);
     }
 
     //列表

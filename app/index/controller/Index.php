@@ -13,7 +13,7 @@ use app\common\logic\ShopLogic;
 class Index extends Base
 {
     public function index()
-    {url();
+    {
 		Log::error('错误信息');
         Log::info('首页');
         $pagesize = 5;

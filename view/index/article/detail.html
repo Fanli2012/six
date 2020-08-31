@@ -24,7 +24,7 @@ function getmore(condition)
 {
     var url = "<?php echo http_host(); ?>/api/article/index";
     //var typeid = "";
-    $.post(url,condition,function(res){
+    $.get(url,condition,function(res){
         if(res.code==0)
         {
             var json = res.data.list; //数组

@@ -45,12 +45,6 @@
       </div>
     </div>
     <div class="layui-form-item">
-      <label class="layui-form-label">seoTitle</label>
-      <div class="layui-input-block">
-        <input name="seotitle" type="text" id="seotitle" value="<?php echo $post["seotitle"]; ?>" class="layui-input">
-      </div>
-    </div>
-    <div class="layui-form-item">
       <label class="layui-form-label">
         缩略图
       </label>
@@ -92,6 +86,12 @@ function upImage()
 }
 </script>
 <script type="text/plain" id="ueditorimg"></script>
+    <div class="layui-form-item">
+      <label class="layui-form-label">SEO标题</label>
+      <div class="layui-input-block">
+        <input name="seotitle" type="text" id="seotitle" value="<?php echo $post["seotitle"]; ?>" class="layui-input">
+      </div>
+    </div>
     <div class="layui-form-item">
       <label class="layui-form-label">关键词</label>
       <div class="layui-input-inline">

@@ -5,15 +5,15 @@ namespace app\common\validate;
 use app\common\lib\Helper;
 use app\common\lib\Validator;
 
-class AdminLog extends Base
+class Log extends Base
 {
     // 验证规则
     protected $rule = [
         'id' => 'require|number|gt:0',
         'ip' => 'require|max:15|ip',
         'content' => 'max:250',
-        'admin_name' => 'require|max:30',
-        'admin_id' => 'require|number|egt:0',
+        'login_name' => 'max:30',
+        'login_id' => 'number|egt:0',
         'url' => 'require|max:255',
         'domain_name' => 'max:60',
         'http_referer' => 'max:255',
@@ -29,11 +29,11 @@ class AdminLog extends Base
         'ip.max' => 'IP不能超过15个字符',
         'ip.ip' => 'IP格式不正确',
         'content.max' => '操作内容不能超过255个字符',
-        'admin_name.require' => '名称不能为空',
-        'admin_name.max' => '名称不能超过30个字符',
-        'admin_id.require' => '管理员ID不能为空',
-        'admin_id.number' => '管理员ID必须是数字',
-        'admin_id.egt' => '管理员ID格式不正确',
+        'login_name.require' => '登录名称不能为空',
+        'login_name.max' => '登录名称不能超过30个字符',
+        'login_id.require' => '登录ID不能为空',
+        'login_id.number' => '登录ID必须是数字',
+        'login_id.egt' => '登录ID格式不正确',
         'url.require' => 'URL不能为空',
         'url.max' => 'URL不能超过255个字符',
         'domain_name.max' => '域名不能超过60个字符',
@@ -46,8 +46,8 @@ class AdminLog extends Base
     ];
 
     protected $scene = [
-        'add' => ['ip', 'content', 'admin_name', 'admin_id', 'route', 'http_method', 'add_time'],
-        'edit' => ['ip', 'content', 'admin_name', 'admin_id', 'route', 'http_method', 'add_time'],
+        'add' => ['ip', 'content', 'login_name', 'login_id', 'route', 'http_method', 'add_time'],
+        'edit' => ['ip', 'content', 'login_name', 'login_id', 'route', 'http_method', 'add_time'],
         'del' => ['id'],
     ];
 }

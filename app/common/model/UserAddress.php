@@ -81,7 +81,7 @@ class UserAddress extends Base
             $res = $res->order($order);
         }
 
-        return $res->paginate($limit, $simple);
+        return $res->paginate(['query' => array_filter(request()->param()), 'list_rows' => $limit], $simple);
     }
 
     /**

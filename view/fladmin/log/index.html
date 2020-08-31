@@ -10,6 +10,15 @@
 <div class="layui-row" style="padding:15px;border-bottom:1px solid #f6f6f6;">
   <form action="{:url('index')}" method="get" class="layui-form layui-col-md12">
     搜索：
+      <div class="layui-input-inline">
+        <select name="type_id">
+          <option value="">请选择模块</option>
+          <option value="1">fladmin</option>
+          <option value="2">index</option>
+          <option value="3">api</option>
+          <option value="0">未知</option>
+        </select>
+      </div>
     <div class="layui-inline">
       <input type="text" id="keyword" name="keyword" placeholder="请输入关键字" autocomplete="off" class="layui-input">
     </div>
@@ -18,14 +27,18 @@
 </div>
 <div class="layui-fluid">
   <div style="padding-top:15px;padding-bottom:5px;">
-    <a onclick="confirm_prompt('{:url('clear')}')" href="javascript:;" class="layui-btn layui-btn-danger"><i class="layui-icon layui-icon-add-circle"></i>清空记录</a>
+    <a href="{:url('index')}?type=1" class="layui-btn">后台日志</a>
+    <a href="{:url('index')}?type=2" class="layui-btn layui-btn-normal">前台日志</a>
+    <a href="{:url('index')}?type=3" class="layui-btn layui-btn-warm">API日志</a>
+    <a onclick="confirm_prompt('{:url('clear')}')" href="javascript:;" class="layui-btn layui-btn-danger"><i class="layui-icon layui-icon-reduce-circle"></i>清空记录</a>
   </div>
 
   <div class="layui-form">
     <table class="layui-table">
       <thead>
         <tr>
-			<th>编号</th>
+			<th>ID</th>
+			<th>模块</th>
 			<th>操作者</th>
 			<th>操作记录</th>
 			<th>来源</th>
@@ -38,11 +51,12 @@
         <?php if ($list) { foreach ($list as $row) { ?>
         <tr>
 			<td><?php echo $row['id']; ?></td>
-			<td><a href="{:url('index')}?user_id=<?php echo $row['admin_id']; ?>"><?php if (!empty($row['admin_name'])) { echo $row['admin_name']; } else { echo '未登录'; } ?></a></td>
+			<td><a href="{:url('index')}?type=<?php echo $row['type']; ?>"><?php echo $row['type_text']; ?></a></td>
+			<td><a href="{:url('index')}?login_id=<?php echo $row['login_id']; ?>"><?php if (!empty($row['login_name'])) { echo $row['login_name']; } else { echo '未登录'; } ?></a></td>
 			<td style="width:300px;word-wrap:break-word;white-space:normal;word-break:break-all;">【<a href="{:url('index')}?http_method=<?php echo $row['http_method']; ?>"><?php echo $row['http_method']; ?></a>】<a href="<?php echo $row['url']; ?>" target="_blank"><?php echo $row['url']; ?></a> <?php if ($row['content']) { echo ' - ' . htmlentities($row['content'], ENT_QUOTES, "UTF-8"); } ?></td>
 			<td style="width:300px;word-wrap:break-word;white-space:normal;word-break:break-all;"><a href="<?php echo $row['http_referer']; ?>" target="_blank"><?php echo $row['http_referer']; ?></a></td>
 			<td><a href="{:url('index')}?ip=<?php echo $row['ip']; ?>"><?php echo $row['ip']; ?></a> <a href="https://www.baidu.com/s?wd=<?php echo $row['ip']; ?>" target="_blank">查看</a></td>
-			<td><?php echo date('Y-m-d H:i', $row['add_time']); ?></td>
+			<td><?php echo date('Y-m-d H:i:s', $row['add_time']); ?></td>
 			<td><a onclick="confirm_prompt('<?php echo url('del').'?id=' . $row['id']; ?>')" href="javascript:;">删除</a></td>
         </tr>
         <?php } } ?>
@@ -51,4 +65,9 @@
     <div class="backpages">{$page|raw}</div>
   </div>
 </div>
+<script>
+  layui.use(['jquery', 'form'], function () {
+    var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
+  });
+</script>
 {/block}

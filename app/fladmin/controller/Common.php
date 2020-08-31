@@ -16,6 +16,8 @@ class Common extends CommonController
      */
     public function __construct()
     {
+		parent::__construct();
+
         // 未登录
         if (!session('admin_info')) {
             $this->error('您访问的页面不存在或已被删除', '/', '', 3);
@@ -25,7 +27,7 @@ class Common extends CommonController
 		session('admin_info', $this->admin_info);
 		
 		// 添加管理员操作记录
-		$this->admin_log_add();
+		$this->operation_log_add();
     }
 
     // 设置空操作
@@ -35,15 +37,16 @@ class Common extends CommonController
     }
 
 	// 添加管理员操作记录
-	public function admin_log_add()
+	public function operation_log_add()
     {
 		$time = time();
 		// 记录操作
 		$admin_info = session('admin_info');
         if ($admin_info) {
-            $data['admin_id'] = $admin_info['id'];
-            $data['admin_name'] = $admin_info['name'];
+            $data['login_id'] = $admin_info['id'];
+            $data['login_name'] = $admin_info['name'];
         }
+        $data['type'] = 1;
         $data['ip'] = request()->ip();
         $data['url'] = mb_strcut(request()->url(), 0, 255, 'UTF-8');
         $data['http_method'] = request()->method();
@@ -51,7 +54,7 @@ class Common extends CommonController
         if ($data['http_method'] != 'GET') { $data['content'] = mb_strcut(json_encode(input(), JSON_UNESCAPED_SLASHES), 0, 255, 'UTF-8'); }
 		if (!empty($_SERVER['HTTP_REFERER'])) { $data['http_referer'] = mb_strcut($_SERVER['HTTP_REFERER'], 0, 255, 'UTF-8'); }
         $data['add_time'] = $time;
-        logic('AdminLog')->add($data);
+        logic('Log')->add($data);
     }
 
     /**

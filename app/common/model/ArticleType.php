@@ -32,12 +32,11 @@ class ArticleType extends Base
      */
     public function getList($where = array(), $order = '', $field = '*', $offset = 0, $limit = 15)
     {
-        $where['delete_time'] = self::ARTICLE_TYPE_UNDELETE;
-        $res['count'] = self::where($where)->count();
+        $res['count'] = self::where($where)->where('delete_time', self::ARTICLE_TYPE_UNDELETE)->count();
         $res['list'] = array();
 
         if ($res['count'] > 0) {
-            $res['list'] = self::where($where);
+            $res['list'] = self::where($where)->where('delete_time', self::ARTICLE_TYPE_UNDELETE);
 
             if (is_array($field)) {
                 $res['list'] = $res['list']->withoutField($field);
@@ -69,8 +68,7 @@ class ArticleType extends Base
      */
     public function getPaginate($where = array(), $order = '', $field = '*', $limit = 15, $simple = false)
     {
-        $where['delete_time'] = self::ARTICLE_TYPE_UNDELETE;
-        $res = self::where($where);
+        $res = self::where($where)->where('delete_time', self::ARTICLE_TYPE_UNDELETE);
 
         if (is_array($field)) {
             $res = $res->withoutField($field);
@@ -84,7 +82,7 @@ class ArticleType extends Base
             $res = $res->order($order);
         }
 
-        return $res->paginate($limit, $simple);
+        return $res->paginate(['query' => array_filter(request()->param()), 'list_rows' => $limit], $simple);
     }
 
     /**
@@ -97,8 +95,7 @@ class ArticleType extends Base
      */
     public function getAll($where = array(), $order = '', $field = '*', $limit = '')
     {
-        $where['delete_time'] = self::ARTICLE_TYPE_UNDELETE;
-        $res = self::where($where);
+        $res = self::where($where)->where('delete_time', self::ARTICLE_TYPE_UNDELETE);
 
         if (is_array($field)) {
             $res = $res->withoutField($field);
@@ -129,8 +126,7 @@ class ArticleType extends Base
      */
     public function getOne($where, $field = '*', $order = '')
     {
-        $where['delete_time'] = self::ARTICLE_TYPE_UNDELETE;
-        $res = self::where($where);
+        $res = self::where($where)->where('delete_time', self::ARTICLE_TYPE_UNDELETE);
 
         if (is_array($field)) {
             $res = $res->withoutField($field);
@@ -211,8 +207,7 @@ class ArticleType extends Base
      */
     public function getCount($where, $field = '*')
     {
-        $where['delete_time'] = self::ARTICLE_TYPE_UNDELETE;
-        return self::where($where)->count($field);
+        return self::where($where)->where('delete_time', self::ARTICLE_TYPE_UNDELETE)->count($field);
     }
 
     /**
@@ -223,8 +218,7 @@ class ArticleType extends Base
      */
     public function getMax($where, $field)
     {
-        $where['delete_time'] = self::ARTICLE_TYPE_UNDELETE;
-        return self::where($where)->max($field);
+        return self::where($where)->where('delete_time', self::ARTICLE_TYPE_UNDELETE)->max($field);
     }
 
     /**
@@ -235,8 +229,7 @@ class ArticleType extends Base
      */
     public function getMin($where, $field)
     {
-        $where['delete_time'] = self::ARTICLE_TYPE_UNDELETE;
-        return self::where($where)->min($field);
+        return self::where($where)->where('delete_time', self::ARTICLE_TYPE_UNDELETE)->min($field);
     }
 
     /**
@@ -247,8 +240,7 @@ class ArticleType extends Base
      */
     public function getAvg($where, $field)
     {
-        $where['delete_time'] = self::ARTICLE_TYPE_UNDELETE;
-        return self::where($where)->avg($field);
+        return self::where($where)->where('delete_time', self::ARTICLE_TYPE_UNDELETE)->avg($field);
     }
 
     /**
@@ -259,8 +251,7 @@ class ArticleType extends Base
      */
     public function getSum($where, $field)
     {
-        $where['delete_time'] = self::ARTICLE_TYPE_UNDELETE;
-        return self::where($where)->sum($field);
+        return self::where($where)->where('delete_time', self::ARTICLE_TYPE_UNDELETE)->sum($field);
     }
 
     /**
@@ -271,8 +262,7 @@ class ArticleType extends Base
      */
     public function getFieldValue($where, $field)
     {
-        $where['delete_time'] = self::ARTICLE_TYPE_UNDELETE;
-        return self::where($where)->value($field);
+        return self::where($where)->where('delete_time', self::ARTICLE_TYPE_UNDELETE)->value($field);
     }
 
     /**
@@ -283,8 +273,7 @@ class ArticleType extends Base
      */
     public function getColumn($where, $field)
     {
-        $where['delete_time'] = self::ARTICLE_TYPE_UNDELETE;
-        return self::where($where)->column($field);
+        return self::where($where)->where('delete_time', self::ARTICLE_TYPE_UNDELETE)->column($field);
     }
 
     /**

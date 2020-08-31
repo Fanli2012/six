@@ -5,9 +5,9 @@ namespace app\fladmin\controller;
 use think\facade\Db;
 use app\common\lib\ReturnData;
 use app\common\lib\Helper;
-use app\common\logic\AdminLogLogic;
+use app\common\logic\LogLogic;
 
-class AdminLog extends Base
+class Log extends Base
 {
     public function _initialize()
     {
@@ -16,7 +16,7 @@ class AdminLog extends Base
 
     public function getLogic()
     {
-        return new AdminLogLogic();
+        return new LogLogic();
     }
 
     //列表
@@ -24,15 +24,19 @@ class AdminLog extends Base
     {
         $where = array();
 		if (!empty($_REQUEST["keyword"])) {
-            $where[] = array('content', 'like', '%' . $_REQUEST['keyword'] . '%');
+            $where[] = array('login_name|ip|url|content', 'like', '%' . $_REQUEST['keyword'] . '%');
         }
         //用户ID
-        if (isset($_REQUEST['user_id'])) {
-			$where[] = array('user_id', '=', $_REQUEST['user_id']);
+        if (isset($_REQUEST['login_id'])) {
+			$where[] = array('login_id', '=', $_REQUEST['login_id']);
         }
         //IP
         if (isset($_REQUEST['ip'])) {
 			$where[] = array('ip', '=', $_REQUEST['ip']);
+        }
+        //模块
+        if (isset($_REQUEST['type']) && $_REQUEST['type'] !== '') {
+			$where[] = array('type', '=', $_REQUEST['type']);
         }
         //请求方式
         if (isset($_REQUEST['http_method'])) {
@@ -109,7 +113,7 @@ class AdminLog extends Base
     public function clear()
     {
         // 截断表
-        Db::execute('truncate table `fl_admin_log`');
+        Db::execute('truncate table `fl_log`');
         $this->success('操作成功', url('index'), '', 1);
     }
 }

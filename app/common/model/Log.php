@@ -4,7 +4,7 @@ namespace app\common\model;
 
 use think\facade\Db;
 
-class AdminLog extends Base
+class Log extends Base
 {
     // 模型会自动对应数据表，模型类的命名规则是除去表前缀的数据表名称，采用驼峰法命名，并且首字母大写，例如：模型名UserType，约定对应数据表think_user_type(假设数据库的前缀定义是 think_)
     // 设置当前模型对应的完整数据表名称
@@ -15,7 +15,7 @@ class AdminLog extends Base
 
     public function getDb()
     {
-        return Db::name('admin_log');
+        return Db::name('log');
     }
 
     // 开启写入时间戳字段
@@ -26,8 +26,6 @@ class AdminLog extends Base
      * @var array
      */
     protected $auto = [];
-    protected $insert = ['add_time'];
-    protected $update = ['update_time'];
 
     /**
      * 列表
@@ -90,7 +88,7 @@ class AdminLog extends Base
             $res = $res->order($order);
         }
 
-        return $res->paginate($limit, $simple);
+        return $res->paginate(['query' => array_filter(request()->param()), 'list_rows' => $limit], $simple);
     }
 
     /**
@@ -314,5 +312,16 @@ class AdminLog extends Base
     public function toSql()
     {
         return self::getLastSql();
+    }
+
+	/**
+     * 获取器——类型  类型：默认0未知，1fladmin，2index，3api
+     * @param int $value
+     * @return string
+     */
+    public function getTypeTextAttr($value, $data)
+    {
+        $arr = array(0 => '未知', 1 => 'fladmin', 2 => 'index', 3 => 'api', 4 => 'wap', 5 => 'shop', 6 => 'weixin');
+        return $arr[$data['type']];
     }
 }
