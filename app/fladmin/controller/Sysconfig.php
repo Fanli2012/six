@@ -94,4 +94,20 @@ class Sysconfig extends Base
         cache('sysconfig', NULL);
         $this->success("删除成功");
     }
+
+	//其它配置
+    public function other()
+    {
+		if (Helper::isPostRequest()) {
+			$post_data = input('post.');
+			foreach ($post_data as $k=>$v) {
+				model('Sysconfig')->edit(['value' => $v], ['varname' => $k]);
+			}
+			// 删除缓存数据
+			cache('sysconfig', NULL);
+            $this->success('操作成功');
+        }
+
+        return view('');
+    }
 }

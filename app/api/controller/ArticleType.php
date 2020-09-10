@@ -2,8 +2,8 @@
 
 namespace app\api\controller;
 
-use think\Db;
-use think\Request;
+use think\facade\Db;
+use think\facade\Request;
 use app\common\lib\Token;
 use app\common\lib\Helper;
 use app\common\lib\ReturnData;
@@ -30,14 +30,14 @@ class ArticleType extends Common
         $limit = input('limit', 10);
         $offset = input('offset', 0);
         $orderby = input('orderby', 'listorder asc');
-        if (input('parent_id', '') !== '') {
+        if (input('parent_id', 0) > 0) {
             $where[] = array('parent_id', '=', input('parent_id'));
         }
-        if (input('keyword', '') !== '') {
+        if (input('keyword', '') != '') {
             $where['name'] = array('like', '%' . input('keyword') . '%');
         }
-        if (input('shop_id', '') !== '') {
-			$where[] = array('shop_id', '=', input('shop_id'));
+        if (input('shop_id', 0) > 0) {
+            $where[] = array('shop_id', '=', input('shop_id'));
         }
 
         $res = $this->getLogic()->getList($where, $orderby, ['content'], $offset, $limit);

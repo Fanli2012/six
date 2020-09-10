@@ -13,9 +13,9 @@ class Base extends Common
      */
     public function __construct()
     {
-		// Token验证
+        // Token验证
         $this->checkToken();
-		
+
         parent::__construct();
     }
 
@@ -44,7 +44,7 @@ class Base extends Common
             // TOKEN验证
             $access_token = request()->header('AccessToken') ?: request()->param('access_token');
             if (!$access_token) {
-				$this->operation_log_add([]);
+                $this->operation_log_add([]);
                 Util::echo_json(ReturnData::create(ReturnData::TOKEN_ERROR));
             }
 
@@ -52,7 +52,7 @@ class Base extends Common
             if (!$this->login_info) {
                 $token_info = logic('Token')->checkToken($access_token);
                 if ($token_info['code'] != ReturnData::SUCCESS) {
-					$this->operation_log_add([]);
+                    $this->operation_log_add([]);
                     Util::echo_json($token_info);
                 }
 

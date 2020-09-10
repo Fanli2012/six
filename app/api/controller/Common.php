@@ -8,7 +8,7 @@ use app\common\lib\Helper;
 
 class Common extends CommonController
 {
-	protected $login_info = array();
+    protected $login_info = array();
 
     /**
      * 初始化

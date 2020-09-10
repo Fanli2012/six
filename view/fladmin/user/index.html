@@ -28,7 +28,6 @@
       <thead>
         <tr>
             <th>ID</th>
-			<th>头像</th>
 			<th>用户名</th>
 			<th>性别</th>
 			<th>余额</th>
@@ -43,8 +42,7 @@
         <?php if ($list) { foreach ($list as $row) { ?>
         <tr>
             <td><?php echo $row['id']; ?></td>
-			<td><img src="<?php echo $row['head_img']; ?>" style="width:24px;height:24px;" onerror="this.src='<?php echo http_host(); ?>/images/no_pic.jpg'"></td>
-			<td><?php if($row['user_name']){echo $row['user_name'];}else{echo $row['mobile'];} ?></td>
+			<td><?php if (!empty($row['head_img'])) { ?><img src="<?php echo $row['head_img']; ?>" style="width:24px;height:24px;" onerror="this.src='<?php echo http_host(); ?>/images/no_pic.jpg'"><?php } ?> <a href="javascript:;" style="<?php if ($row['login_time'] > (time() - 300)) { echo 'color:#f60;'; } ?>"><?php if ($row['user_name']) { echo $row['user_name']; } else { echo $row['mobile']; } ?></a></td>
 			<td><?php echo $row['sex_text']; ?></td>
 			<td><?php echo $row['money']; ?></td>
 			<td><?php echo $row['point']; ?></td>

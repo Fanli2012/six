@@ -26,11 +26,13 @@
         "topthink/think-multi-app": "^1.0",
         "topthink/think-view": "^1.0",
 		"topthink/think-captcha": "^3.0",
+        "topthink/think-image": "^1.0",
         "topthink/think-annotation": "^1.0",
         "topthink/think-queue": "^3.0",
         "topthink/think-throttle": "^1.0",
         "topthink/think-worker": "^3.0",
         "overtrue/wechat": "^4.2",
+		"aliyuncs/oss-sdk-php": "^2.3",
         "phpmailer/phpmailer": "^6.1",
         "predis/predis": "^1.1"
     },
