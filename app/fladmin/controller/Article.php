@@ -306,4 +306,52 @@ class Article extends Base
 
         echo model('Article')->getCount($map);
     }
+
+	// 批量添加文章标题
+    public function batch_add_article_title()
+    {
+		$time = time();
+        if (Helper::isPostRequest()) {
+			if (empty($_POST['titles'])) {
+				$this->error('标题不能为空');
+			}
+			// 最新文章
+			$zuixin_article = db('article')->order(['add_time'=>'desc'])->find();
+
+			$data = [];
+			$_POST['titles'] = str_replace(" ","",str_replace("\n",",",$_POST['titles']));
+            $titles = explode(",", $_POST['titles']);
+			foreach ($titles as $row) {
+				if (empty(trim($row))) {
+					continue;
+				}
+				// 判断标题是否存在
+				$article = model('Article')->getOne(['title'=>$row]);
+				if ($article) {
+					continue;
+				}
+				$add_time = $zuixin_article['add_time'] + rand(72000,9000);
+				$data[] = [
+					'type_id' => 1,
+					'click' => rand(200, 500),
+					'title' => $row,
+					'keywords' => $row,
+					'description' => $row,
+					'status' => 1,
+					'add_time' => $add_time,
+					'update_time' => $add_time,
+				];
+			}
+			if (!$data) {
+				$this->error('没有数据');
+			}
+			$res = db('article')->strict(false)->insertAll($data);
+			if (!$res) {
+				$this->error('操作失败');
+			}
+            $this->success('操作成功');
+        }
+
+        return view();
+    }
 }

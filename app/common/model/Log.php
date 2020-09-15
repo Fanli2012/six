@@ -321,7 +321,7 @@ class Log extends Base
      */
     public function getTypeTextAttr($value, $data)
     {
-        $arr = array(0 => '未知', 1 => 'fladmin', 2 => 'index', 3 => 'api', 4 => 'wap', 5 => 'shop', 6 => 'weixin');
+        $arr = array(0 => '未知', 1 => 'fladmin', 2 => 'index', 3 => 'api', 4 => 'wap', 5 => 'weixin', 6 => 'shop');
         return $arr[$data['type']];
     }
 }

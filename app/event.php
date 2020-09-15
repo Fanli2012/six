@@ -1,17 +1,23 @@
 <?php
 // 事件定义文件
 return [
-    'bind'      => [
+    // 事件绑定
+    'bind' => [
     ],
-
-    'listen'    => [
-        'AppInit'  => [],
-        'HttpRun'  => [],
-        'HttpEnd'  => [],
+    // 事件监听
+    'listen' => [
+        'AppInit' => [],
+        'HttpRun' => [],
+        'HttpEnd' => [],
         'LogLevel' => [],
         'LogWrite' => [],
+		// 测试
+		'OrderShipped' => [
+		    'app\listener\SendEmail',
+		    'app\listener\SendSms',
+		],
     ],
-
+    // 事件订阅
     'subscribe' => [
     ],
 ];

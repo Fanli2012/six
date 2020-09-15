@@ -10,7 +10,7 @@
 // +----------------------------------------------------------------------
 
 return [
-    'default'     => 'sync',
+    'default'     => env('queue.queue_driver', 'sync'),
     'connections' => [
         'sync'     => [
             'type' => 'sync',

@@ -104,7 +104,7 @@ class Index extends Base
         return view('index', $assign_data);
     }
 
-	//XML地图
+	// XML地图
     public function sitemap()
     {
         //最新文章
@@ -117,9 +117,10 @@ class Index extends Base
         return view('index/Index/sitemap', $assign_data);
     }
 
-    //404页面
+    // 404页面
     public function notfound()
     {
         return view('index/Index/notfound');
     }
+
 }

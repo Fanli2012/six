@@ -2,10 +2,8 @@
 
 namespace app\index\controller;
 
-use think\Db;
-use think\Log;
-use think\Request;
-use think\Session;
+use think\facade\Db;
+use think\facade\Log;
 use app\common\lib\ReturnData;
 use app\common\lib\Helper;
 use app\common\logic\ShopLogic;
@@ -145,4 +143,33 @@ class Test extends Base
         $z->close();
     }
 
+	// 队列测试
+    public function queue()
+    {
+        $jobHandlerClassName = 'app\job\Example';
+		// 当前任务归属的队列名称，如果为新队列，会自动创建
+		$jobQueueName = null;
+		// 当前任务所需的业务数据不能为 resource 类型，其他类型最终将转化为json形式的字符串
+		$data = json_encode(['test'=>'test']);
+		// 将该任务推送到消息队列，等待对应的消费者去执行
+		$isPushed = \think\facade\Queue::push($jobHandlerClassName, $data, $jobQueueName);
+		// database 驱动时，返回值为 1|false  ;   redis 驱动时，返回值为 随机字符串|false
+		if ( $isPushed !== false ) {
+			echo date('Y-m-d H:i:s') . " a new Job is Pushed to the MQ";
+		} else {
+			echo 'Oops, something went wrong.';
+		}
+    }
+
+	// 事件监听测试
+    public function listener()
+    {
+        event('OrderShipped', ['data'=>123]);
+    }
+
+	// 门面测试
+    public function facade()
+    {
+        var_dump(\app\facade\Test::getAll());
+    }
 }
