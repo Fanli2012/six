@@ -6,9 +6,9 @@ use think\Db;
 use think\Request;
 use app\common\lib\ReturnData;
 use app\common\lib\Helper;
-use app\common\logic\PageLogic;
+use app\common\logic\AdLogic;
 
-class Page extends Base
+class Ad extends Base
 {
     public function _initialize()
     {
@@ -17,7 +17,7 @@ class Page extends Base
 
     public function getLogic()
     {
-        return new PageLogic();
+        return new AdLogic();
     }
 
     //列表
@@ -83,19 +83,26 @@ class Page extends Base
     public function detail()
     {
         $id = input('id');
-
-        $where[] = ['id|filename', '=', $id];
-        $post = cache("index_page_detail_$id");
+		$where[] = ['id|flag', '=', $id];
+        $post = cache("index_ad_detail_$id");
         if (!$post) {
-			$where[] = ['delete_time', '=', 0];
+			$time = time();
             $post = $this->getLogic()->getOne($where);
             if (!$post) {
-                Helper::http404();
+                exit('not found');
             }
-            cache("index_page_detail_$id", $post, 2592000);
+			if ($post['is_expire'] == 1 && $post['end_time'] < $time) {
+				exit('expired');
+			}
+            cache("index_ad_detail_$id", $post, 2592000);
         }
 
 		$assign_data['post'] = $post;
-        return view('index/Page/detail', $assign_data);
+		if (Helper::is_mobile_access()) {
+			if ($post['content_wap']) {
+				exit($post['content_wap']);
+			}
+		}
+        exit($post['content']);
     }
 }

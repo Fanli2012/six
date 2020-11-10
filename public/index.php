@@ -12,6 +12,9 @@
 // [ 应用入口文件 ]
 namespace think;
 
+// 禁止代理IP访问
+empty($_SERVER['HTTP_VIA']) or exit('Access Denied');
+
 require __DIR__ . '/../vendor/autoload.php';
 
 // 执行HTTP应用并响应
