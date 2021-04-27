@@ -88,15 +88,15 @@ class LogLogic extends BaseLogic
             return ReturnData::create(ReturnData::PARAMS_ERROR);
         }
 
+        if (!isset($data['add_time'])) {
+            $data['add_time'] = $data['update_time'] = time();
+        }
+
         try {
             $this->getValidate()->scene('add')->check($data);
         } catch (ValidateException $e) {
             // 验证失败 输出错误信息
             return ReturnData::create(ReturnData::PARAMS_ERROR, null, $e->getError());
-        }
-
-        if (!isset($data['add_time'])) {
-            $data['add_time'] = $data['update_time'] = time();
         }
 
         $res = $this->getModel()->add($data, $type);

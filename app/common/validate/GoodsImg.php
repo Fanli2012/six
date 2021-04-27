@@ -9,7 +9,7 @@ class GoodsImg extends Base
         'id' => 'require|number|gt:0',
         'goods_id' => 'require|number|gt:0',
         'url' => 'require|max:150',
-        'des' => 'max:150',
+        'desc' => 'max:150',
         'listorder' => 'number|egt:0',
         'add_time' => 'require|number|egt:0',
     ];
@@ -23,7 +23,7 @@ class GoodsImg extends Base
         'goods_id.gt' => '商品ID格式不正确',
         'url.require' => '图片地址不能为空',
         'url.max' => '图片地址不能超过150个字符',
-        'des.max' => '描述不能超过150个字符',
+        'desc.max' => '描述不能超过150个字符',
         'listorder.number' => '排序必须是数字',
         'listorder.egt' => '排序格式不正确',
         'add_time.require' => '添加时间不能为空',
@@ -32,8 +32,8 @@ class GoodsImg extends Base
     ];
 
     protected $scene = [
-        'add' => ['goods_id', 'url', 'des', 'listorder', 'add_time'],
-        'edit' => ['goods_id', 'url', 'des', 'listorder', 'add_time'],
+        'add' => ['goods_id', 'url', 'desc', 'listorder', 'add_time'],
+        'edit' => ['goods_id', 'url', 'desc', 'listorder', 'add_time'],
         'del' => ['id'],
     ];
 }

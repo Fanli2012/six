@@ -27,6 +27,7 @@
         <tr>
 			<th>ID</th>
 			<th>名称</th>
+			<th>标识</th>
 			<th>是否限时</th>
 			<th>结束时间</th>
 			<th>管理</th>
@@ -37,6 +38,7 @@
         <tr>
 			<td><?php echo $row["id"]; ?></td>
 			<td><?php echo $row["name"]; ?></td>
+			<td><?php echo $row["flag"]; ?></td>
 			<td><?php if ($row["is_expire"] == 0) { echo '不限时间'; } else { echo '限时标记'; } ?></td>
 			<td><?php if ($row["end_time"] > 0) { echo date('Y-m-d', $row["end_time"]); } ?></td>
 			<td><a href="{:url('edit')}?id=<?php echo $row["id"]; ?>">修改</a> | <a onclick="delconfirm('{:url('del')}?id=<?php echo $row["id"]; ?>')" href="javascript:;">删除</a></td>

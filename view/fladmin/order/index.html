@@ -2,7 +2,6 @@
 {block name="title"}订单列表{/block}
 
 {block name="content"}
-<script language="javascript" type="text/javascript" src="/js/layer/layer.js"></script>
 <div class="admin-content-box-nav">
   <span class="layui-breadcrumb" lay-filter="breadcrumb" style="visibility:visible;">
     <a href="{:url('index')}"><cite>订单列表</cite></a>
@@ -15,7 +14,7 @@
       <input type="text" id="keyword" name="keyword" placeholder="" autocomplete="off" class="layui-input">
     </div>
     <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="">查询</button>
-    <button class="layui-btn layui-btn-danger" onclick="output_excel()">导出EXCEL</button>
+    <button type="button" class="layui-btn layui-btn-danger" onclick="output_excel()">导出EXCEL</button>
   </form>
 </div>
 <div class="layui-fluid">
@@ -49,8 +48,9 @@
 </div>
 
 <script>
-layui.use(['jquery', 'form'], function () {
+layui.use(['jquery', 'form', 'layer'], function () {
   var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
+  var layer = layui.layer;
   //……
   //但是，如果你的HTML是动态生成的，自动渲染就会失效
   //因此你需要在相应的地方，执行下述方法来手动渲染，跟这类似的还有 element.init();

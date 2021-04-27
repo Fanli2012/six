@@ -28,7 +28,6 @@ class UserRecharge extends Base
         }
         //用户ID
         if (isset($_REQUEST['user_id']) && $_REQUEST['user_id'] > 0) {
-            $where['user_id'] = $_REQUEST['user_id'];
 			$where[] = array('user_id', '=', $_REQUEST['user_id']);
         }
         //充值类型：1微信，2支付宝

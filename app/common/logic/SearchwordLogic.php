@@ -87,6 +87,11 @@ class SearchwordLogic extends BaseLogic
         if (empty($data)) {
             return ReturnData::create(ReturnData::PARAMS_ERROR);
         }
+        //添加时间
+        $time = time();
+        if (!(isset($data['update_time']) && !empty($data['update_time']))) {
+            $data['update_time'] = $time;
+        }
 
         try {
             $this->getValidate()->scene('add')->check($data);

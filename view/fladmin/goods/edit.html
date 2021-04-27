@@ -160,7 +160,7 @@ function upImage()
       <div class="layui-input-inline">
         <input type="button" class="layui-btn" onclick="upImage2();" value="选择图片">
       </div>
-      <div class="layui-input-inline" id="duotulist">
+      <div class="layui-input-inline" id="duotulist" style="width:400px;">
         <?php if($goods_img_list){foreach($goods_img_list as $k=>$v){echo '<img style="margin-left:10px;" src="'.$v['url'].'" width="120" height="80"><input name="goods_img[]" type="text" value="'.$v['url'].'" style="display:none;">';}} ?>
       </div>
     </div>

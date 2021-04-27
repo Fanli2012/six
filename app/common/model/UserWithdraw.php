@@ -327,7 +327,7 @@ class UserWithdraw extends Base
         return self::getLastSql();
     }
 
-    //用户状态：0正常，1待审，2锁定
+    //提现状态：0未处理,1处理中,2成功,3取消，4拒绝
     public function getStatusTextAttr($value, $data)
     {
         return self::$user_withdraw_status_desc[$data['status']];

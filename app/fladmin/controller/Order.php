@@ -278,7 +278,6 @@ class Order extends Base
                 $where['order_status'] = 0;
                 $where['shipping_status'] = 0;
                 $where['pay_status'] = 1;
-                $where['pay_status'] = 0;
             } elseif ($_REQUEST['status'] == 3) {
                 $where['order_status'] = 0;
                 $where['refund_status'] = 0;

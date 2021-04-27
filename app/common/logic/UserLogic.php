@@ -487,6 +487,20 @@ class UserLogic extends BaseLogic
 			return ReturnData::create(ReturnData::PARAMS_ERROR, null, $e->getError());
 		}
 
+        //判断手机号是否存在
+        if (isset($data['mobile']) && $data['mobile'] != '') {
+            if ($this->getModel()->getOne(array('mobile' => $data['mobile']))) {
+                return ReturnData::create(ReturnData::PARAMS_ERROR, null, '手机号已存在');
+            }
+        }
+
+        //判断用户名
+        if (isset($data['user_name']) && $data['user_name'] != '') {
+            if ($this->getModel()->getOne(array('user_name' => $data['user_name']))) {
+                return ReturnData::create(ReturnData::PARAMS_ERROR, null, '用户名已存在');
+            }
+        }
+
         //判断推荐人是否存在
         if (isset($data['parent_id']) && $data['parent_id'] > 0) {
             $parent_user = $this->getModel()->getOne(array('id' => $data['parent_id']));
@@ -506,13 +520,6 @@ class UserLogic extends BaseLogic
             }
 
             $data['parent_id'] = $user['id'];
-        }
-
-        //判断用户名
-        if (isset($data['user_name']) && $data['user_name'] != '') {
-            if ($this->getModel()->getOne(array('user_name' => $data['user_name']))) {
-                return ReturnData::create(ReturnData::PARAMS_ERROR, null, '用户名已存在');
-            }
         }
 
         $data['password'] = $this->passwordEncrypt($data['password']);

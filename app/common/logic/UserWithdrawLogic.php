@@ -112,10 +112,10 @@ class UserWithdrawLogic extends BaseLogic
 
         if ($data['method'] == UserWithdraw::USER_WITHDRAW_METHOD_BANK) {
             if (!(isset($data['bank_name']) && !empty($data['bank_name']))) {
-                return ReturnData::create(ReturnData::PARAMS_ERROR, null, '银行名称必填');
+                return ReturnData::create(ReturnData::PARAMS_ERROR, null, '银行名称不能为空');
             }
             if (!(isset($data['bank_place']) && !empty($data['bank_place']))) {
-                return ReturnData::create(ReturnData::PARAMS_ERROR, null, '开户行必填');
+                return ReturnData::create(ReturnData::PARAMS_ERROR, null, '开户行不能为空');
             }
         }
 

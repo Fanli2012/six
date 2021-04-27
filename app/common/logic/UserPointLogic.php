@@ -134,7 +134,7 @@ class UserPointLogic extends BaseLogic
             return ReturnData::create(ReturnData::FAIL);
         }
 
-        $user_point = model('User')->getValue(array('id' => $data['user_id']), 'point'); //用户余额
+        $user_point = model('User')->getFieldValue(array('id' => $data['user_id']), 'point'); //用户余额
         $data['user_point'] = $user_point;
         $res = $this->getModel()->add($data, $type);
         if (!$res) {

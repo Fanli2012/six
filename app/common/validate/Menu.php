@@ -15,7 +15,7 @@ class Menu extends Base
         'type' => 'number|in:0,1',
         'name' => 'require|max:50',
         'icon' => 'max:50',
-        'des' => 'max:250',
+        'desc' => 'max:250',
         'listorder' => 'number|egt:0',
         'status' => 'in:0,1',
     ];
@@ -41,15 +41,15 @@ class Menu extends Base
         'name.require' => '名称不能为空',
         'name.max' => '名称不能超过50个字符',
         'icon.max' => '菜单图标不能超过50个字符',
-        'des.max' => '备注不能超过250个字符',
+        'desc.max' => '备注不能超过250个字符',
         'listorder.number' => '排序必须是数字',
         'listorder.egt' => '排序格式不正确',
         'status.in' => '状态，1显示，0不显示',
     ];
 
     protected $scene = [
-        'add' => ['parent_id', 'module', 'controller', 'action', 'data', 'type', 'name', 'icon', 'des', 'listorder', 'status'],
-        'edit' => ['parent_id', 'module', 'controller', 'action', 'data', 'type', 'name', 'icon', 'des', 'listorder', 'status'],
+        'add' => ['parent_id', 'module', 'controller', 'action', 'data', 'type', 'name', 'icon', 'desc', 'listorder', 'status'],
+        'edit' => ['parent_id', 'module', 'controller', 'action', 'data', 'type', 'name', 'icon', 'desc', 'listorder', 'status'],
         'del' => ['id'],
     ];
 }

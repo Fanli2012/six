@@ -47,7 +47,7 @@ class Log extends Base
 
     protected $scene = [
         'add' => ['ip', 'content', 'login_name', 'login_id', 'route', 'http_method', 'add_time'],
-        'edit' => ['ip', 'content', 'login_name', 'login_id', 'route', 'http_method', 'add_time'],
+        'edit' => ['ip', 'content', 'login_name', 'login_id', 'route', 'http_method'],
         'del' => ['id'],
     ];
 }

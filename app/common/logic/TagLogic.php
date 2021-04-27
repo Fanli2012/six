@@ -107,11 +107,12 @@ class TagLogic extends BaseLogic
             }
         }
 
+		//关键词
         if (isset($data["keywords"])) {
             $data['keywords'] = str_replace("，", ",", $data["keywords"]);
         } else {
             unset($data['keywords']);
-        } //关键词
+        }
 
         $res = $this->getModel()->add($data, $type);
         if (!$res) {
